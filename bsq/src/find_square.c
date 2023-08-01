@@ -11,62 +11,52 @@
 /* ************************************************************************** */
 
 #include "bsq.h"
-#include <stdio.h>
-#include <unistd.h>
 
-int	check_square(char **map, t_square_info *sq_info)
+int is_valid(char **map, int row, int col, int size)
 {
-	int	n;
-	int	ci;
-	int	cj;
-
-	n = 0;
-	while (n < ft_strlen(map[1]) - 1)
+	int i = 0;
+	while (i < size)
 	{
-		ci = sq_info->i;
-		cj = sq_info->j + n + 1;
-		while (ci <= n + 1 + sq_info->i)
+		int j = 0;
+		while (j < size)
 		{
-			if (!map[ci] || map[ci][cj] == sq_info->obstacle)
-			{
-				if (n <= sq_info->size)
-					return (0);
-				sq_info->x = sq_info->i;
-				sq_info->y = sq_info->j;
-				sq_info->size = n;
-				printf("size: %d | x: %d | y: %d\n", sq_info->size, sq_info->x, sq_info->y);
-			}
-			ci++;
+			if (map[row + i][col + j] == map[0][ft_strlen(map[0]) - 2])
+				return 0;
+			j++;
 		}
-		ci--;
-		while (cj >= sq_info->j)
-		{
-			if (map[ci][cj] == sq_info->obstacle || map[ci][cj] == '\0')
-			{
-				if (n <= sq_info->size)
-					return (0);
-				sq_info->x = sq_info->i;
-				sq_info->y = sq_info->j;
-				sq_info->size = n;
-				printf("size: %d | x: %d | y: %d\n", sq_info->size, sq_info->x, sq_info->y);
-			}
-			cj--;
-		}
-		n++;
+		i++;
 	}
-	return (0);
+	return 1;
 }
 
-t_square_info	find_square(char **map)
+void check_square(char **map, t_square_info *sq_info)
 {
-	t_square_info	sq_info;
+	int n = 1;
+	while (sq_info->i + n < ft_strlen(map[1]) && sq_info->j + n < ft_strlen(map[sq_info->i + n]))
+	{
+		if (!is_valid(map, sq_info->i, sq_info->j, n))
+			break;
+		n++;
+	}
 
+	if (n - 1 > sq_info->size)
+	{
+		sq_info->size = n - 1;
+		sq_info->x = sq_info->j;
+		sq_info->y = sq_info->i;
+	}
+}
+
+t_square_info find_square(char **map)
+{
+	t_square_info sq_info;
 	sq_info.size = 0;
 	sq_info.x = 0;
 	sq_info.y = 0;
 	sq_info.full = map[0][ft_strlen(map[0]) - 1];
 	sq_info.obstacle = map[0][ft_strlen(map[0]) - 2];
 	sq_info.i = 1;
+
 	while (map[sq_info.i])
 	{
 		sq_info.j = 0;
@@ -74,9 +64,10 @@ t_square_info	find_square(char **map)
 		{
 			if (map[sq_info.i][sq_info.j] != sq_info.obstacle)
 				check_square(map, &sq_info);
-			sq_info.j = sq_info.j + 1;
+			sq_info.j++;
 		}
-		sq_info.i = sq_info.i + 1;
+		sq_info.i++;
 	}
-	return (sq_info);
+
+	return sq_info;
 }
