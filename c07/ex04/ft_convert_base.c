@@ -6,11 +6,16 @@
 /*   By: drenassi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 18:55:17 by drenassi          #+#    #+#             */
-/*   Updated: 2023/07/27 21:16:48 by drenassi         ###   ########.fr       */
+/*   Updated: 2023/07/31 14:48:44 by drenassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+
+int	ft_strlen(char *str);
+int	ft_nbrlen(int nbr, char *base);
+int	ft_is_valid_base(char *base);
+int	ft_pos_in_base(char c, char *base);
 
 int	ft_atoi_base(char *str, char *base)
 {
@@ -74,6 +79,8 @@ char	*ft_convert_base(char *nbr, char *base_from, char *base_to)
 	i = 0;
 	if (!ft_is_valid_base(base_from) || !ft_is_valid_base(base_to))
 		return (res);
+	if (ft_strlen(nbr) == 0)
+		return (res);
 	i = ft_atoi_base(nbr, base_from);
 	res = ft_itoa_base(i, base_to);
 	return (res);
@@ -83,10 +90,6 @@ char	*ft_convert_base(char *nbr, char *base_from, char *base_to)
 
 int	main(void)
 {
-	printf("ft_itoa_base = -45054 : %s\n",
-		ft_itoa_base(-18988, "01234567"));
-	printf("ft_atoi_base = -18988 : %d\n",
-		ft_atoi_base("   ++--++-4a2c", "0123456789abcdef"));
 	printf("ft_convert_base = -45054 : %s\n",
-		ft_convert_base("    ++--++-4a2c", "0123456789abcdef", "01234567"));
+		ft_convert_base("", "0123456789", "0123456789"));
 }*/

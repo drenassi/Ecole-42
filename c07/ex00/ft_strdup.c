@@ -6,7 +6,7 @@
 /*   By: drenassi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 12:12:41 by drenassi          #+#    #+#             */
-/*   Updated: 2023/07/25 12:42:20 by drenassi         ###   ########.fr       */
+/*   Updated: 2023/07/31 10:54:16 by drenassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ char	*ft_strdup(char *src)
 	dest[i] = 0;
 	return (dest);
 }
-/*
-#include <stdio.h>
+
+/*#include <stdio.h>
 #include <string.h>
 
 char *ft_strdup(char *src);
